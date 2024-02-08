@@ -1,6 +1,7 @@
 package com.synthilearn.workspaceservice.infra.api.rest;
 
 import com.synthilearn.commonstarter.GenericResponse;
+import com.synthilearn.securestarter.AccessToken;
 import com.synthilearn.workspaceservice.app.services.WorkspaceService;
 import com.synthilearn.workspaceservice.infra.api.rest.dto.WorkspaceDto;
 import com.synthilearn.workspaceservice.infra.api.rest.dto.WorkspaceNameRequest;
@@ -37,9 +38,9 @@ public class WorkspaceController {
                 .map(GenericResponse::ok);
     }
 
-    @GetMapping("/{workspaceId}")
-    public Mono<GenericResponse<WorkspaceDto>> findById(@PathVariable UUID workspaceId) {
-        return workspaceService.findById(workspaceId)
+    @GetMapping
+    public Mono<GenericResponse<WorkspaceDto>> findById(AccessToken accessToken) {
+        return workspaceService.findById(accessToken.getId())
                 .map(workspaceDtoMapper::map)
                 .map(GenericResponse::ok);
     }
