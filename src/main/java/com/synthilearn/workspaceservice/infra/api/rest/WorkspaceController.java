@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/workspace-service/v1/workspace")
@@ -30,10 +28,10 @@ public class WorkspaceController {
         return Mono.just(GenericResponse.ok());
     }
 
-    @PatchMapping("/{workspaceId}")
+    @PatchMapping
     public Mono<GenericResponse<WorkspaceDto>> updateName(@RequestBody @Valid WorkspaceNameRequest request,
-                                                          @PathVariable UUID workspaceId) {
-        return workspaceService.updateName(request, workspaceId)
+                                                          AccessToken accessToken) {
+        return workspaceService.updateName(request, accessToken.getId())
                 .map(workspaceDtoMapper::map)
                 .map(GenericResponse::ok);
     }
