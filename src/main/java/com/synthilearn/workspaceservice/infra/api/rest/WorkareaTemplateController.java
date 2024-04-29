@@ -1,6 +1,7 @@
 package com.synthilearn.workspaceservice.infra.api.rest;
 
 import com.synthilearn.commonstarter.GenericResponse;
+import com.synthilearn.securestarter.AccessToken;
 import com.synthilearn.workspaceservice.app.services.WorkareaTemplateService;
 import com.synthilearn.workspaceservice.infra.api.rest.dto.WorkareaTemplateDto;
 import com.synthilearn.workspaceservice.infra.api.rest.dto.WorkareaTemplatesResponse;
@@ -21,8 +22,8 @@ public class WorkareaTemplateController {
     private final WorkareaTemplateDtoMapper workareaTemplateDtoMapper;
 
     @GetMapping("/all")
-    public Mono<GenericResponse<WorkareaTemplatesResponse>> getAll() {
-        return workareaTemplateService.getAll()
+    public Mono<GenericResponse<WorkareaTemplatesResponse>> getAll(AccessToken accessToken) {
+        return workareaTemplateService.getAll(accessToken)
                 .collectList()
                 .map(template -> new WorkareaTemplatesResponse(workareaTemplateDtoMapper.map(template)))
                 .map(GenericResponse::ok);

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class WorkareaTemplate {
 
-    private String type;
+    private WorkareaType type;
     private String name;
     private TemplateStatus status;
     private AvailableStatus available;
